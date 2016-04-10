@@ -10,6 +10,7 @@
 		39FBEE4B1CBA2D1E0038F312 /* SimpleAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 39FBEE4A1CBA2D1E0038F312 /* SimpleAutoLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		39FBEE521CBA2D1F0038F312 /* SimpleAutoLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39FBEE471CBA2D1E0038F312 /* SimpleAutoLayout.framework */; };
 		39FBEE571CBA2D1F0038F312 /* SimpleAutoLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FBEE561CBA2D1F0038F312 /* SimpleAutoLayoutTests.swift */; };
+		39FBEE621CBA305F0038F312 /* SimpleAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FBEE611CBA305F0038F312 /* SimpleAutoLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		39FBEE511CBA2D1F0038F312 /* SimpleAutoLayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleAutoLayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39FBEE561CBA2D1F0038F312 /* SimpleAutoLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAutoLayoutTests.swift; sourceTree = "<group>"; };
 		39FBEE581CBA2D1F0038F312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		39FBEE611CBA305F0038F312 /* SimpleAutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleAutoLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				39FBEE4A1CBA2D1E0038F312 /* SimpleAutoLayout.h */,
+				39FBEE611CBA305F0038F312 /* SimpleAutoLayout.swift */,
 				39FBEE4C1CBA2D1F0038F312 /* Info.plist */,
 			);
 			path = SimpleAutoLayout;
@@ -194,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39FBEE621CBA305F0038F312 /* SimpleAutoLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +314,7 @@
 		39FBEE5C1CBA2D1F0038F312 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -320,12 +325,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.blei.SimpleAutoLayout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		39FBEE5D1CBA2D1F0038F312 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
