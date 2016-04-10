@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SimpleAutoLayout: NSObject {
+public class SimpleAutoLayout: NSObject {
     var superview: UIView
     var lastItem: UIView?
     static var sharedConstraintDict: [UIView: [NSLayoutConstraint]] = [:]
