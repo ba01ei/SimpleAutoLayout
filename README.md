@@ -62,7 +62,11 @@ And keep in mind that everything is chainable. All the functions return the same
 
 # Example
 
-Checkout the [SimpleAutoLayoutExample](SimpleAutoLayoutExample/SimpleAutoLayoutExample/ViewController.swift) folder. Run `pod install` and `open SimpleAutoLayoutExample.xcworkspace`, choose an iPhone simulator and run. Check [example.png](example.png) if you don't want to compile.
+Checkout [SimpleAutoLayoutExample](SimpleAutoLayoutExample/SimpleAutoLayoutExample/ViewController.swift). Go to `SimpleAutoLayoutExample` folder, run `pod install` and `open SimpleAutoLayoutExample.xcworkspace`, choose an iPhone simulator and run. 
+
+The layout result:
+
+![example.png](https://raw.githubusercontent.com/ba01ei/SimpleAutoLayout/master/example.png)
 
 
 # still not 100% convinced?
