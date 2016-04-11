@@ -62,12 +62,12 @@ And keep in mind that everything is chainable. All the functions return the same
 
 # Example
 
-Checkout the SimpleAutoLayoutExample folder. Run `pod install` and `open SimpleAutoLayoutExample.xcworkspace`, choose an iPhone simulator and run. Check example.png if you don't want to compile.
+Checkout the [SimpleAutoLayoutExample](SimpleAutoLayoutExample/SimpleAutoLayoutExample/ViewController.swift) folder. Run `pod install` and `open SimpleAutoLayoutExample.xcworkspace`, choose an iPhone simulator and run. Check [example.png](example.png) if you don't want to compile.
 
 
 # still not 100% convinced?
 
-Also checkout SimpleAutoLayout.swift to see how few lines it takes. Because how SimpleAutoLayout library itself is simple short, simple, and straightforward, it's extremely easy to debug when something is unexpected. And the library itself is unlikely to cause any new complexity or issue.
+Also checkout [SimpleAutoLayout.swift](SimpleAutoLayout/SimpleAutoLayout.swift) to see how few lines it takes. Because how SimpleAutoLayout library itself is simple short, simple, and straightforward, it's extremely easy to debug when something is unexpected. And the library itself is unlikely to cause any new complexity or issue.
 
 And also because of that, it's highly unlikely this is going to go out of maintenance. (Unless Apple discontinued Auto Layout completely) 
 
