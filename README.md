@@ -7,7 +7,7 @@ A super simple library for doing auto layout on iOS.
 
 Like everyone is saying: no one likes interface builder. Auto Layout is hard programmatically on its own.
 
-Previously people made things like masonry, snapkit, Stevia, etc. They are all great. SimpleAutoLayout is similar, but comes with a different flavor: it does less and tries to stay closer to the original Auto Layout APIs. It's not a DSL or a radical new way to layout views. It's just a set of chainable functions that makes using Auto Layout really simple. So it is easy to debug, and it is extremely flexible (e.g. adding any constraint, editing or removing constraints, animating a change).
+Previously people made things like masonry, snapkit, Stevia, etc. They are all great. SimpleAutoLayout is similar, but comes with a different flavor: it does less magic and tries to stay closer to the original Auto Layout APIs. It's not a DSL or a radical new way to think about layouts. It's just a set of chainable functions that makes using Auto Layout really simple. So it is easy to debug, and it is extremely flexible (e.g. adding any constraint, editing or removing constraints, animating a change).
 
 # How to use
 
@@ -28,7 +28,7 @@ Then place all the subviews. One way to place a subview is to use the `place` fu
     h: height
     aspectRatio: w/h. Only use no more than 2 of w, h, and aspectRatio to avoid a conflict. 
 
-Another way add a subview is to use goLeft, goRight, goUp, or goDown. For example:
+Another way add a subview is to use `goLeft`, `goRight`, `goUp`, or `goDown`. For example:
 
     SimpleAutoLayout(on: self)
         .place(label1, fromLeft: 10, fromRight: 10, fromTop: 40, w: 100)
