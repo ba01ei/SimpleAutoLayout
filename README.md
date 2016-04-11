@@ -11,6 +11,19 @@ Previously people made things like masonry, snapkit, Stevia, etc. They are all g
 
 # How to use
 
+## Quick Start Guide
+
+To layout viewA (100x100), viewB (100x100), viewC (100x100) horizontally (left margin, gap = 10), and inside viewC have viewD (40x40) and viewE (40x40) aligned vertically (top margin, gap = 10):
+
+    SimpleAutoLayout(superview: self.view)
+        .place(viewA, fromLeft: 10, fromTop: 10, w: 100, h: 100)
+        .goRight(viewB, 10, alignToLast: [.Width: 0, .Top: 0, .Bottom: 0])
+        .goRight(viewC, 10, alignToLast: [.Width: 0, .Top: 0, .Bottom: 0])
+        .place(viewD, alignToLast: [.Top: 10, .CenterX: 0], w: 40, h: 40)
+        .goDown(viewE, 10, alignToLast: [.Left: 0, .Right: 0])
+
+## Details
+
 First create a SimpleAutoLayout object with a superview.
 
     SimpleAutoLayout(on: superview)
@@ -52,7 +65,7 @@ And keep in mind that everything is chainable. All the functions return the same
 Checkout the SimpleAutoLayoutExample folder. Run `pod install` and `open SimpleAutoLayoutExample.xcworkspace`, choose an iPhone simulator and run. Check example.png if you don't want to compile.
 
 
-# I'm still not 100% convinced..
+# still not 100% convinced?
 
 Also checkout SimpleAutoLayout.swift to see how few lines it takes. Because how SimpleAutoLayout library itself is simple short, simple, and straightforward, it's extremely easy to debug when something is unexpected. And the library itself is unlikely to cause any new complexity or issue.
 
