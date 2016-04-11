@@ -1,0 +1,16 @@
+
+platform :ios, '8.0'
+use_frameworks!
+
+target 'SimpleAutoLayoutExample' do
+pod 'SimpleAutoLayout', :path => ".."
+end
+
+target 'SimpleAutoLayoutExampleTests' do
+
+end
+
+target 'SimpleAutoLayoutExampleUITests' do
+
+end
+

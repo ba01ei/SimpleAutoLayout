@@ -1,0 +1,14 @@
+PODS:
+  - SimpleAutoLayout (0.0.1)
+
+DEPENDENCIES:
+  - SimpleAutoLayout (from `..`)
+
+EXTERNAL SOURCES:
+  SimpleAutoLayout:
+    :path: ..
+
+SPEC CHECKSUMS:
+  SimpleAutoLayout: f8e3905851260b4242a8893a13841683df3b7163
+
+COCOAPODS: 0.39.0
