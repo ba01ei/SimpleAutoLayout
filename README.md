@@ -36,6 +36,12 @@ Another way add a subview is to use `goLeft`, `goRight`, `goUp`, or `goDown`. Fo
 
 means that label2 with be 30 points below label1 (.Top of label2 is 30 below .Bottom of label1), and the .Left and .Right will be the same as label1
 
+Also there is a `from` function that resets the last view. So if viewB and viewC are both right below viewA, you can do
+
+    .place(viewA, ...)
+    .goDown(viewB, distance, ...)
+    .from(viewA).goDown(viewC, distance, ...)
+
 Finally, everything translates to a set of `addConstraint` calls, which is the most basic function that can add any constraint (with item1, a1 (meaning attribute1), item2, a2, multiplier, constant, relation, priority). For anything more complicated, there is always this fallback.
 
 And keep in mind that everything is chainable. All the functions return the same SimpleAutoLayout object.
@@ -44,5 +50,16 @@ And keep in mind that everything is chainable. All the functions return the same
 # Example
 
 Checkout the SimpleAutoLayoutExample folder. Run `pod install` and `open SimpleAutoLayoutExample.xcworkspace`, choose an iPhone simulator and run. Check example.png if you don't want to compile.
+
+
+# I'm still not 100% convinced..
+
+Also checkout SimpleAutoLayout.swift to see how few lines it takes. Because how SimpleAutoLayout library itself is simple short, simple, and straightforward, it's extremely easy to debug when something is unexpected. And the library itself is unlikely to cause any new complexity or issue.
+
+And also because of that, it's highly unlikely this is going to go out of maintenance. (Unless Apple discontinued Auto Layout completely) 
+
+I've tried to quickly build a simple app in a few days (to be published to App Store in the future after more polishing) to make sure it really handles a lot of real world design examples that are rather complex. And with SimpleAutoLayout it can be down really fast.
+
+Some other Auto Layout syntax sugars are also cool, but this one allows you to handle most of the views with 1 view/line (even the `addSubview` call is handled by that 1 call). (For example, if you are placing a number of views horizontally, when you call goRight on each view you can also set the vertical alignment, width, height, etc in the same function call.) There's something nice about having all the layout attributes of one view in one place (or one line), e.g. you can easily comment out a view, or move it to a different file.
 
 
