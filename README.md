@@ -20,7 +20,7 @@ To layout viewA (100x100), viewB (100x100), viewC (100x100) horizontally (left m
         .goRight(viewB, 10, alignToLast: [.Width: 0, .Top: 0, .Bottom: 0])
         .goRight(viewC, 10, alignToLast: [.Width: 0, .Top: 0, .Bottom: 0])
         .place(viewD, alignToLast: [.Top: 10, .CenterX: 0], w: 40, h: 40)
-        .goDown(viewE, 10, alignToLast: [.Left: 0, .Right: 0])
+        .goDown(viewE, 10, alignToLast: [.Left: 0, .Right: 0, .Height: 0])
 
 ## Details
 
