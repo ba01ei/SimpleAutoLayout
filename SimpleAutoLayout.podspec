@@ -6,7 +6,7 @@
 #  To see working Podspecs in the CocoaPods repo see https://github.com/CocoaPods/Specs/
 #
 
-VERSION = "0.0.1"
+POD_VERSION ||= "0.0.1"
 
 Pod::Spec.new do |s|
 
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SimpleAutoLayout"
-  s.version      = VERSION
+  s.version      = POD_VERSION
   s.summary      = "A set of helper functions to iOS auto layout really simple."
 
   # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
     This library attempts to make autolayout really simple to use, yet straightforward enough to understand and debug.
                    DESC
-
+  s.homepage = "https://github.com/ba01ei/SimpleAutoLayout" 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -75,7 +75,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/ba01ei/SimpleAutoLayout.git", :tag => VERSION }
+  s.source       = { :git => "https://github.com/ba01ei/SimpleAutoLayout.git", :tag => POD_VERSION }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
