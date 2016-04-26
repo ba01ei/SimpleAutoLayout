@@ -63,6 +63,9 @@ Finally, everything translates to a set of `addConstraint` calls, which is the m
 
 And keep in mind that everything is chainable. All the functions return the same SimpleAutoLayout object.
 
+# Documentation
+
+http://cocoadocs.org/docsets/SimpleAutoLayout
 
 # Example
 
