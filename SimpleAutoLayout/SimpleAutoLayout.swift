@@ -8,6 +8,8 @@
 
 import UIKit
 
+/// Instances of SimpleAutoLayout class can be created to provide the Auto Layout helper functions.
+/// Each instance has a specified superview, and automatically tracks the last subview.
 public class SimpleAutoLayout: NSObject {
     var superview: UIView
     var lastItem: UIView?
