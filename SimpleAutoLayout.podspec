@@ -6,7 +6,7 @@
 #  To see working Podspecs in the CocoaPods repo see https://github.com/CocoaPods/Specs/
 #
 
-POD_VERSION ||= "0.0.1"
+POD_VERSION ||= "0.0.2"
 
 Pod::Spec.new do |s|
 
