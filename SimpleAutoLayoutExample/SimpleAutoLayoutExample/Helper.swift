@@ -9,23 +9,23 @@
 import UIKit
 
 class Helper: NSObject {
-    class func viewWithColor(color: UIColor) -> UIView {
+    class func viewWithColor(_ color: UIColor) -> UIView {
         let view = UIView()
         view.backgroundColor = color
         return view
     }
     
-    class func makeCircleWithRadius(radius: CGFloat, forView view: UIView) {
+    class func makeCircleWithRadius(_ radius: CGFloat, forView view: UIView) {
         view.clipsToBounds = true
         view.layer.cornerRadius = radius
     }
     
-    class func addBorder(color: UIColor, width: CGFloat, forView view: UIView) {
-        view.layer.borderColor = color.CGColor
+    class func addBorder(_ color: UIColor, width: CGFloat, forView view: UIView) {
+        view.layer.borderColor = color.cgColor
         view.layer.borderWidth = width
     }
     
-    class func label(text: String) -> UILabel {
+    class func label(_ text: String) -> UILabel {
         let label = UILabel()
         label.text = text
         return label
