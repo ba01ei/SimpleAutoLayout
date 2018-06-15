@@ -82,8 +82,8 @@ Also checkout [SimpleAutoLayout.swift](SimpleAutoLayout/SimpleAutoLayout.swift) 
 
 And also because of that, it's highly unlikely this is going to go out of maintenance. (Unless Apple discontinued Auto Layout completely) 
 
-I've tried to quickly build a simple app in a few days (to be published to App Store in the future after more polishing) to make sure it really handles a lot of real world design examples that are rather complex. And with SimpleAutoLayout it can be down really fast.
+I've tried to quickly build a simple app in a few days (to be published to App Store in the future after more polishing) to make sure it really handles a lot of real world design examples that are rather complex. And with SimpleAutoLayout it can be done really fast.
 
-Some other Auto Layout syntax sugars are also cool, but this one allows you to handle most of the views with 1 view/line (even the `addSubview` call is handled by that 1 call). (For example, if you are placing a number of views horizontally, when you call goRight on each view you can also set the vertical alignment, width, height, etc in the same function call.) There's something nice about having all the layout attributes of one view in one place (or one line), e.g. you can easily comment out a view, or move it to a different file.
+Some other Auto Layout syntax sugars are also cool, but this one allows you to handle most of the views with 1 line/subview (even the `addSubview` call is handled by that 1 call). (For example, if you are placing a number of views horizontally, when you call goRight on each view you can also set the vertical alignment, width, height, etc in the same function call.) There's something nice about having all the layout attributes of one view in one place (or one line), e.g. you can easily comment out a view, or move it to a different file.
 
 

@@ -42,7 +42,7 @@ open class SimpleAutoLayout: NSObject {
                       fromLeft: CGFloat? = nil, fromRight: CGFloat? = nil,
                       fromTop: CGFloat? = nil, fromBottom: CGFloat? = nil,
                       fromCenterX: CGFloat? = nil, fromCenterY: CGFloat? = nil,
-                      alignToLast: [NSLayoutAttribute: CGFloat]? = nil,
+                      alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil,
                       w: CGFloat? = nil, h: CGFloat? = nil,
                       aspectRatio: CGFloat? = nil)
         -> SimpleAutoLayout
@@ -84,7 +84,7 @@ open class SimpleAutoLayout: NSObject {
     /// @param aspectRatio the subview's width/height ratio
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param endWithMargin if passed in, this subview will have this such distance to the right border of the superview
-    @discardableResult open func goRight(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutAttribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil) -> SimpleAutoLayout {
+    @discardableResult open func goRight(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .left, item2: lastItem, a2: .right, constant:distance)
         place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
@@ -102,7 +102,7 @@ open class SimpleAutoLayout: NSObject {
     /// @param aspectRatio the subview's width/height ratio
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param endWithMargin if passed in, this subview will have this such distance to the left border of the superview
-    @discardableResult open func goLeft(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutAttribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil) -> SimpleAutoLayout {
+    @discardableResult open func goLeft(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .right, item2: lastItem, a2: .left, constant:-distance)
         place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
@@ -120,7 +120,7 @@ open class SimpleAutoLayout: NSObject {
     /// @param aspectRatio the subview's width/height ratio
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param endWithMargin if passed in, this subview will have this such distance to the bottom border of the superview
-    @discardableResult open func goDown(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutAttribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil) -> SimpleAutoLayout {
+    @discardableResult open func goDown(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .top, item2: lastItem, a2: .bottom, constant: distance)
         place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
@@ -138,7 +138,7 @@ open class SimpleAutoLayout: NSObject {
     /// @param aspectRatio the subview's width/height ratio
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param endWithMargin if passed in, this subview will have this such distance to the top border of the superview
-    @discardableResult open func goUp(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutAttribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil) -> SimpleAutoLayout {
+    @discardableResult open func goUp(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .bottom, item2: lastItem, a2: .top, constant: -distance)
         place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
@@ -213,7 +213,7 @@ open class SimpleAutoLayout: NSObject {
     /// @param a1 attribute of the first item
     /// @param item2 second item of the constraint
     /// @param a2 attribute of the second item
-    @discardableResult open func constraint(_ item1: UIView, a1: NSLayoutAttribute, item2: UIView? = nil, a2: NSLayoutAttribute = .notAnAttribute) -> NSLayoutConstraint? {
+    @discardableResult open func constraint(_ item1: UIView, a1: NSLayoutConstraint.Attribute, item2: UIView? = nil, a2: NSLayoutConstraint.Attribute = .notAnAttribute) -> NSLayoutConstraint? {
         for oldConstraint in superview.constraints {
             if item1 === oldConstraint.firstItem as? UIView
                 && item2 === oldConstraint.secondItem as? UIView
@@ -235,7 +235,7 @@ open class SimpleAutoLayout: NSObject {
     /// @param constant constant of the constraint
     /// @param relation relation of the constraint
     /// @param priority priority of the constraint
-    @discardableResult open func addConstraint(_ item1:UIView, a1: NSLayoutAttribute, item2: UIView? = nil, a2:NSLayoutAttribute = .notAnAttribute, multiplier:CGFloat = 1, constant:CGFloat = 0, relation:NSLayoutRelation = .equal, priority:UILayoutPriority? = nil) -> SimpleAutoLayout {
+    @discardableResult open func addConstraint(_ item1:UIView, a1: NSLayoutConstraint.Attribute, item2: UIView? = nil, a2:NSLayoutConstraint.Attribute = .notAnAttribute, multiplier:CGFloat = 1, constant:CGFloat = 0, relation:NSLayoutConstraint.Relation = .equal, priority:UILayoutPriority? = nil) -> SimpleAutoLayout {
         let constraint = NSLayoutConstraint(item: item1, attribute: a1, relatedBy: relation, toItem: item2, attribute: a2, multiplier: multiplier, constant: constant)
         
         if let priority = priority {
@@ -269,7 +269,7 @@ open class SimpleAutoLayout: NSObject {
     /// @param item2 second item of the constraint
     /// @param a2 attribute of the second item
     /// @param newConstant the new constant value
-    @discardableResult open func updateConstant(_ item1 : UIView, a1: NSLayoutAttribute, item2: UIView, a2: NSLayoutAttribute, newConstant: CGFloat) -> SimpleAutoLayout {
+    @discardableResult open func updateConstant(_ item1 : UIView, a1: NSLayoutConstraint.Attribute, item2: UIView, a2: NSLayoutConstraint.Attribute, newConstant: CGFloat) -> SimpleAutoLayout {
         constraint(item1, a1: a1, item2: item2, a2: a2)?.constant = newConstant
         return self
     }
@@ -289,7 +289,7 @@ open class SimpleAutoLayout: NSObject {
     /// @param a1 attribute of the first item
     /// @param item2 second item of the constraint
     /// @param a2 attribute of the second item
-    @discardableResult open func removeConstraint(_ item1: UIView, a1: NSLayoutAttribute, item2: UIView? = nil, a2: NSLayoutAttribute = .notAnAttribute) -> SimpleAutoLayout {
+    @discardableResult open func removeConstraint(_ item1: UIView, a1: NSLayoutConstraint.Attribute, item2: UIView? = nil, a2: NSLayoutConstraint.Attribute = .notAnAttribute) -> SimpleAutoLayout {
         for oldConstraint in superview.constraints {
             if item1 === oldConstraint.firstItem as? UIView
                 && item2 === oldConstraint.secondItem as? UIView
