@@ -3,7 +3,7 @@ SimpleAutoLayout
 
 A super simple library for doing Auto Layout on iOS.
 
-# Motivation
+# Intro
 
 Like everyone said: no one likes Interface Builder. Doing Auto Layout programmatically is hard on its own.
 
@@ -11,7 +11,7 @@ Previously people made things like Masonry, Snapkit, Stevia, etc. They are all g
 
 It's not a DSL or a radical new way to think about layouts. It's just a set of chainable functions that makes using Auto Layout really simple. So it is easy to debug, and it is extremely flexible (e.g. adding any constraint, editing or removing constraints, animating a change).
 
-# Update of of November 2018
+## Update of of November 2018
 
 SimpleAutoLayout also supports RTL (Right to Left language) and SafeAreaLayoutGuide now. Check API documentation for details.
 
