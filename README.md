@@ -11,7 +11,22 @@ Previously people made things like Masonry, Snapkit, Stevia, etc. They are all g
 
 It's not a DSL or a radical new way to think about layouts. It's just a set of chainable functions that makes using Auto Layout really simple. So it is easy to debug, and it is extremely flexible (e.g. adding any constraint, editing or removing constraints, animating a change).
 
+# Update of of November 2018
+
+SimpleAutoLayout also supports RTL (Right to Left language) and SafeAreaLayoutGuide now. Check API documentation for details.
+
 # How to use
+
+## Integration
+
+If you use Cocoapod, in your Podfile, add this line:
+
+```
+pod 'SimpleAutoLayout', :git => "git@github.com:ba01ei/SimpleAutoLayout", :tag => "0.3.0"
+```
+
+Then `import SimpleAutoLayout` and you are ready to go.
+
 
 ## Quick Start Guide
 
@@ -35,23 +50,23 @@ First create a SimpleAutoLayout object with a superview.
 Then place all the subviews. One way to place a subview is to use the `place` function. Meanings of each params:
 
     fromLeft: distance from left border of the superview
-    fromRight: distance from right border of the superview
-    fromTop: distance from top border of the superview
-    fromBottom: distance from bottom border of the superview
-    fromCenterX: distance to this view's centerX from superview's centerX
-    fromCenterY: distance to this view's centerY from superview's centerY
+    fromRight, fromTop, etc: similar to fromLeft, but for another side
     alignToLast: a dictionary. key is an NSAutoLayoutAttribute, like .Left, .CenterX, value is the difference between this view's this attribute and last view's such attribute (last view is the view we placed before calling this line)
     w: width
     h: height
     aspectRatio: w/h. Only use no more than 2 of w, h, and aspectRatio to avoid a conflict. 
+    safeAreaFromTop: boolean indicating whether fromTop is from the the safe area (i.e. the notch free area)
+    safeAreaFromBottom, safeAreaFromLeft, etc: similar to safeAreaFromTop, but for another side
 
 Another way add a subview is to use `goLeft`, `goRight`, `goUp`, or `goDown`. For example:
 
     SimpleAutoLayout(on: self)
         .place(label1, fromLeft: 10, fromRight: 10, fromTop: 40, w: 100)
-        .goDown(label2, 30, alignToLast: [.Left: 0, .Right: 0])
+        .goDown(label2, 30, alignToLast: [.left: 0, .right: 0])
 
-means that label2 with be 30 points below label1 (.Top of label2 is 30 below .Bottom of label1), and the .Left and .Right will be the same as label1
+means that label2 with be 30 points below label1 (.Top of label2 is 30 below .Bottom of label1), and the .left and .right will be the same as label1
+
+`goDown`, `goUp`, etc also have a boolean param `safeArea`, which indicates whether the `endWithMargin` will have the margin from superview's safe area border (as opposed to the superview border).
 
 Also there is a `from` function that resets the last view. So if viewB and viewC are both right below viewA, you can do
 
@@ -62,10 +77,6 @@ Also there is a `from` function that resets the last view. So if viewB and viewC
 Finally, everything translates to a set of `addConstraint` calls, which is the most basic function that can add any constraint (with item1, a1 (meaning attribute1), item2, a2, multiplier, constant, relation, priority). For anything more complicated, there is always this fallback.
 
 And keep in mind that everything is chainable. All the functions return the same SimpleAutoLayout object.
-
-# Documentation
-
-http://cocoadocs.org/docsets/SimpleAutoLayout
 
 # Example
 
@@ -78,12 +89,10 @@ The layout result:
 
 # still not 100% convinced?
 
-Also checkout [SimpleAutoLayout.swift](SimpleAutoLayout/SimpleAutoLayout.swift) to see how few lines it takes. Because how SimpleAutoLayout library itself is simple short, simple, and straightforward, it's extremely easy to debug when something is unexpected. And the library itself is unlikely to cause any new complexity or issue.
+SimpleAutoLayout is very lightweight and close to the original AutoLayout API, so it is highly unlikely to go out of maintenance. I have updated the library to support safe area layout guide easily, for example.
 
-And also because of that, it's highly unlikely this is going to go out of maintenance. (Unless Apple discontinued Auto Layout completely) 
+I've tried to quickly build a simple app in a few days, to make sure it really handles a lot of real world design examples that are rather complex. And with SimpleAutoLayout it can be done really fast.
 
-I've tried to quickly build a simple app in a few days (to be published to App Store in the future after more polishing) to make sure it really handles a lot of real world design examples that are rather complex. And with SimpleAutoLayout it can be done really fast.
-
-Some other Auto Layout syntax sugars are also cool, but this one allows you to handle most of the views with 1 line/subview (even the `addSubview` call is handled by that 1 call). (For example, if you are placing a number of views horizontally, when you call goRight on each view you can also set the vertical alignment, width, height, etc in the same function call.) There's something nice about having all the layout attributes of one view in one place (or one line), e.g. you can easily comment out a view, or move it to a different file.
+Some other Auto Layout wrapper libraries are also cool, but this one allows you to handle most of the views with 1 line/subview (even the `addSubview` call is handled by that 1 call). (For example, if you are placing a number of views horizontally, when you call goRight on each view you can also set the vertical alignment, width, height, etc in the same function call.) There's something nice about having all the layout attributes of one view in one place (or one line), e.g. you can easily comment out a view, or move it to a different file.
 
 
