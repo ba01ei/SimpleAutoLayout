@@ -15,6 +15,12 @@ open class SimpleAutoLayout: NSObject {
     var lastItem: UIView?
     static var sharedConstraintDict: [UIView: [NSLayoutConstraint]] = [:]
     
+    public enum SizingParam {
+        case w
+        case h
+        case aspectRatio
+    }
+    
     /// Initialize a SimpleAutoLayout object with a superview.
     public init(on superview:UIView) {
         self.superview = superview
@@ -42,68 +48,59 @@ open class SimpleAutoLayout: NSObject {
     /// @param aspectRatio the subview's width/height ratio
     /// @param safeAreaFromTop indicates whether fromTop should be from the top edge of safe area
     @discardableResult open func place(_ item: UIView,
-                      fromLeft: CGFloat? = nil, fromRight: CGFloat? = nil,
-                      fromLeading: CGFloat? = nil, fromTrailing: CGFloat? = nil,
-                      fromTop: CGFloat? = nil, fromBottom: CGFloat? = nil,
-                      fromCenterX: CGFloat? = nil, fromCenterY: CGFloat? = nil,
-                      alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil,
-                      w: CGFloat? = nil, h: CGFloat? = nil,
-                      aspectRatio: CGFloat? = nil,
-                      safeAreaFromTop: Bool = false,
-                      safeAreaFromLeft: Bool = false,
-                      safeAreaFromLeading: Bool = false,
-                      safeAreaFromRight: Bool = false,
-                      safeAreaFromTrailing: Bool = false,
-                      safeAreaFromBottom: Bool = false)
+                                       from: [NSLayoutConstraint.Attribute: CGFloat],
+                                       size: [SizingParam: CGFloat]? = nil,
+                                       alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil,
+                                       safeAreaEdges: [NSLayoutConstraint.Attribute] = [])
         -> SimpleAutoLayout
     {
         add(item)
-        if let fromLeft = fromLeft {
-            if safeAreaFromLeft, #available(iOS 11, *) {
+        if let fromLeft = from[.left] {
+            if safeAreaEdges.contains(.left), #available(iOS 11, *) {
                 item.leftAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leftAnchor, constant: fromLeft).isActive = true
             } else {
                 addConstraint(item, a1: .left, item2: superview, a2: .left, constant: fromLeft)
             }
         }
-        if let fromRight = fromRight {
-            if safeAreaFromRight, #available(iOS 11, *) {
+        if let fromRight = from[.right] {
+            if safeAreaEdges.contains(.right), #available(iOS 11, *) {
                 item.rightAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.rightAnchor, constant: -fromRight).isActive = true
             } else {
                 addConstraint(item, a1: .right, item2: superview, a2: .right, constant: -fromRight)
             }
         }
-        if let fromLeading = fromLeading {
-            if safeAreaFromLeading, #available(iOS 11, *) {
+        if let fromLeading = from[.leading] {
+            if safeAreaEdges.contains(.leading), #available(iOS 11, *) {
                 item.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: fromLeading).isActive = true
             } else {
                 addConstraint(item, a1: .leading, item2: superview, a2: .leading, constant: fromLeading)
             }
         }
-        if let fromTrailing = fromTrailing {
-            if safeAreaFromTrailing, #available(iOS 11, *) {
+        if let fromTrailing = from[.trailing] {
+            if safeAreaEdges.contains(.trailing), #available(iOS 11, *) {
                 item.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -fromTrailing).isActive = true
             } else {
                 addConstraint(item, a1: .trailing, item2: superview, a2: .trailing, constant: -fromTrailing)
             }
         }
-        if let fromTop = fromTop {
-            if safeAreaFromTop, #available(iOS 11, *) {
+        if let fromTop = from[.top] {
+            if safeAreaEdges.contains(.top), #available(iOS 11, *) {
                 item.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: fromTop).isActive = true
             } else {
                 addConstraint(item, a1: .top, item2: superview, a2: .top, constant: fromTop)
             }
         }
-        if let fromBottom = fromBottom {
-            if safeAreaFromBottom, #available(iOS 11, *) {
+        if let fromBottom = from[.bottom] {
+            if safeAreaEdges.contains(.bottom), #available(iOS 11, *) {
                 item.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: fromBottom).isActive = true
             } else {
                 addConstraint(item, a1: .bottom, item2: superview, a2: .bottom, constant: -fromBottom)
             }
         }
-        if let fromCenterX = fromCenterX {
+        if let fromCenterX = from[.centerX] {
             addConstraint(item, a1: .centerX, item2: superview, a2: .centerX, constant: fromCenterX)
         }
-        if let fromCenterY = fromCenterY {
+        if let fromCenterY = from[.centerY] {
             addConstraint(item, a1: .centerY, item2: superview, a2: .centerY, constant: fromCenterY)
         }
         if let alignToLast = alignToLast {
@@ -112,7 +109,7 @@ open class SimpleAutoLayout: NSObject {
             }
         }
         
-        setAttributes(item, w: w, h: h, aspectRatio: aspectRatio)
+        setAttributes(item, size: size)
         return self
     }
     
@@ -124,10 +121,10 @@ open class SimpleAutoLayout: NSObject {
     /// @param aspectRatio the subview's width/height ratio
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param endWithMargin if passed in, this subview will have this such distance to the right border of the superview
-    @discardableResult open func goRight(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
+    @discardableResult open func goRight(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .left, item2: lastItem, a2: .right, constant:distance)
-        place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
+        place(item, from: [:], size: size, alignToLast: alignToLast)
         if let endWithMargin = endWithMargin {
             if safeArea, #available(iOS 11.0, *) {
                 item.rightAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.rightAnchor, constant: -endWithMargin)
@@ -139,10 +136,10 @@ open class SimpleAutoLayout: NSObject {
     }
     
     /// Similar to goRight, but with RTL support
-    @discardableResult open func goTrailing(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
+    @discardableResult open func goTrailing(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .leading, item2: lastItem, a2: .trailing, constant:distance)
-        place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
+        place(item, from: [:], size: size, alignToLast: alignToLast)
         if let endWithMargin = endWithMargin {
             if safeArea, #available(iOS 11.0, *) {
                 item.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -endWithMargin)
@@ -161,10 +158,10 @@ open class SimpleAutoLayout: NSObject {
     /// @param aspectRatio the subview's width/height ratio
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param endWithMargin if passed in, this subview will have this such distance to the left border of the superview
-    @discardableResult open func goLeft(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
+    @discardableResult open func goLeft(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .right, item2: lastItem, a2: .left, constant:-distance)
-        place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
+        place(item, from: [:], size: size, alignToLast: alignToLast)
         if let endWithMargin = endWithMargin {
             if safeArea, #available(iOS 11.0, *) {
                 item.leftAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leftAnchor, constant: endWithMargin).isActive = true
@@ -176,10 +173,10 @@ open class SimpleAutoLayout: NSObject {
     }
     
     /// Similar to goLeft but with RTL support
-    @discardableResult open func goLeading(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
+    @discardableResult open func goLeading(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .trailing, item2: lastItem, a2: .leading, constant:-distance)
-        place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
+        place(item, from: [:], size: [:], alignToLast: alignToLast)
         if let endWithMargin = endWithMargin {
             if safeArea, #available(iOS 11.0, *) {
                 item.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: endWithMargin).isActive = true
@@ -198,10 +195,10 @@ open class SimpleAutoLayout: NSObject {
     /// @param aspectRatio the subview's width/height ratio
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param endWithMargin if passed in, this subview will have this such distance to the bottom border of the superview
-    @discardableResult open func goDown(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
+    @discardableResult open func goDown(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .top, item2: lastItem, a2: .bottom, constant: distance)
-        place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
+        place(item, from: [:], size: size, alignToLast: alignToLast)
         if let endWithMargin = endWithMargin {
             if safeArea, #available(iOS 11, *) {
                 item.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -endWithMargin).isActive = true
@@ -220,10 +217,10 @@ open class SimpleAutoLayout: NSObject {
     /// @param aspectRatio the subview's width/height ratio
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param endWithMargin if passed in, this subview will have this such distance to the top border of the superview
-    @discardableResult open func goUp(_ item: UIView, _ distance: CGFloat = 0, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
+    @discardableResult open func goUp(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .bottom, item2: lastItem, a2: .top, constant: -distance)
-        place(item, alignToLast: alignToLast, w: w, h: h, aspectRatio: aspectRatio)
+        place(item, from: [:], size: size, alignToLast: alignToLast)
         if let endWithMargin = endWithMargin {
             if safeArea, #available(iOS 11, *) {
                 item.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: endWithMargin).isActive = true
@@ -247,14 +244,14 @@ open class SimpleAutoLayout: NSObject {
     /// @param w the subview's width
     /// @param h the subview's height
     /// @param aspectRatio the subview's width/height ratio
-    @discardableResult open func setAttributes(_ item: UIView, w: CGFloat? = nil, h: CGFloat? = nil, aspectRatio: CGFloat? = nil) -> SimpleAutoLayout {
-        if let w = w {
+    @discardableResult open func setAttributes(_ item: UIView, size: [SizingParam: CGFloat]?) -> SimpleAutoLayout {
+        if let w = size?[.w] {
             width(item, w)
         }
-        if let h = h {
+        if let h = size?[.h] {
             height(item, h)
         }
-        if let aspectRatio = aspectRatio {
+        if let aspectRatio = size?[.aspectRatio] {
             self.aspectRatio(item, aspectRatio)
         }
         lastItem = item
