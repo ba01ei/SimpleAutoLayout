@@ -39,7 +39,7 @@ open class SimpleAutoLayout: NSObject {
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param safeAreaEdges a list of edges that should include safe area margin
     @discardableResult open func place(_ item: UIView,
-                                       from: [NSLayoutConstraint.Attribute: CGFloat],
+                                       from: [NSLayoutConstraint.Attribute: CGFloat] = [:],
                                        size: [SizingParam: CGFloat]? = nil,
                                        alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil,
                                        safeAreaEdges: [NSLayoutConstraint.Attribute] = [])

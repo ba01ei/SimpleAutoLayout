@@ -33,11 +33,11 @@ Then `import SimpleAutoLayout` and you are ready to go.
 To layout viewA (100x100), viewB (100x100), viewC (100x100) horizontally (left margin, gap = 10), and inside viewC have viewD (40x40) and viewE (40x40) aligned vertically (top margin, gap = 10):
 
     SimpleAutoLayout(superview: self.view)
-        .place(viewA, fromLeft: 10, fromTop: 10, w: 100, h: 100)
-        .goRight(viewB, 10, alignToLast: [.width: 0, .top: 0, .bottom: 0])
-        .goRight(viewC, 10, alignToLast: [.width: 0, .top: 0, .bottom: 0])
-        .place(viewD, alignToLast: [.top: 10, .centerX: 0], w: 40, h: 40)
-        .goDown(viewE, 10, alignToLast: [.left: 0, .right: 0, .height: 0])
+        .place(viewA, from: [.left: 10, .top: 10], size: [.w: 100, .h: 100])
+        .goRight(viewB, distance: 10, alignToLast: [.width: 0, .top: 0, .bottom: 0])
+        .goRight(viewC, distance: 10, alignToLast: [.width: 0, .top: 0, .bottom: 0])
+        .place(viewD, alignToLast: [.top: 10, .centerX: 0], size: [.w: 40, .h: 40])
+        .goDown(viewE, distance: 10, alignToLast: [.left: 0, .right: 0, .height: 0])
 
 (No need to call superview.addSubview(viewA) or set translatesAutoresizingMaskIntoConstraints. This is it.)
 
@@ -49,22 +49,19 @@ First create a SimpleAutoLayout object with a superview.
 
 Then place all the subviews. One way to place a subview is to use the `place` function. Meanings of each params:
 
-    fromLeft: distance from left border of the superview
-    fromRight, fromTop, etc: similar to fromLeft, but for another side
+    from: distance from each edge of the superview
+    size: the size params, e.g. .w, .h, .aspectRatio
+    keys include .left, .leading, .top, .centerX, etc.
     alignToLast: a dictionary. key is an NSAutoLayoutAttribute, like .left, .centerX, value is the difference between this view's this attribute and last view's such attribute (last view is the view we placed before calling this line)
-    w: width
-    h: height
-    aspectRatio: w/h. Only use no more than 2 of w, h, and aspectRatio to avoid a conflict. 
-    safeAreaFromTop: boolean indicating whether fromTop is from the the safe area (i.e. the notch free area)
-    safeAreaFromBottom, safeAreaFromLeft, etc: similar to safeAreaFromTop, but for another side
+    safeAreaEdges: indicating which edges should include safe area margins (i.e. to avoiod the notch)
 
 Another way add a subview is to use `goLeft`, `goRight`, `goUp`, or `goDown`. For example:
 
     SimpleAutoLayout(on: self)
-        .place(label1, fromLeft: 10, fromRight: 10, fromTop: 40, w: 100)
-        .goDown(label2, 30, alignToLast: [.left: 0, .right: 0])
+        .place(label1, from: [.left: 10, .right: 10, .top: 40], size: [.w: 100])
+        .goDown(label2, distance: 30, alignToLast: [.left: 0, .right: 0])
 
-means that label2 with be 30 points below label1 (.Top of label2 is 30 below .Bottom of label1), and the .left and .right will be the same as label1
+means that label2 with be 30 points below label1 (.top of label2 is 30 below .bottom of label1), and the .left and .right will be the same as label1
 
 `goDown`, `goUp`, etc also have a boolean param `safeArea`, which indicates whether the `endWithMargin` will have the margin from superview's safe area border (as opposed to the superview border).
 
@@ -81,7 +78,7 @@ And keep in mind that everything is chainable. All the functions return the same
 
 ### RTL Support
 
-Just replace `Left` with `Leading`, `Right` with `Trailing`, `.left` with `.leading`, `.right` with `.trailing`.
+Just replace `.left` with `.leading`, `.right` with `.trailing`.
 
 Above examples use left and right so it's simpler to visualize. In real code you should use leading and trailing.
 
