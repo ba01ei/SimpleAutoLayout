@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     
     fileprivate func layoutFlag() {
         SimpleAutoLayout(on: self.view)
-            .place(flag, fromLeft: 20, fromRight: 20, fromTop: 40, aspectRatio: 2)
+            .place(flag, from: [.left: 20, .right: 20, .top: 40], size: [.aspectRatio: 2], safeAreaEdges: [.top])
             .place(blue, alignToLast: [.left: 1, .top: 1, .bottom: 1])
             .addConstraint(blue, a1: .width, item2: flag, a2: .width, multiplier: 1/3)
             .goRight(white, alignToLast: [.top: 0, .bottom: 0, .width: 0])
@@ -67,25 +67,24 @@ class ViewController: UIViewController {
         
         SimpleAutoLayout(on: self.view)
             .from(flag)
-            .goDown(bearCanvas, 20, aspectRatio: 1, alignToLast: [.width: 0, .centerX: 0])
+            .goDown(bearCanvas, distance: 20, size: [.aspectRatio: 1], alignToLast: [.width: 0, .centerX: 0])
         SimpleAutoLayout(on: bearCanvas)
-            .place(bearHead, fromCenterX: 0, fromCenterY: 0, w: bearHeadRadius*2, aspectRatio: 1)
-            .place(leftEar, alignToLast: [.left: 0, .top: -20], w: bearEarRadius*2, aspectRatio: 1)
+            .place(bearHead, from: [.centerX: 0, .centerY: 0], size: [.w: bearHeadRadius*2, .aspectRatio: 1])
+            .place(leftEar, size: [.w: bearEarRadius*2, .aspectRatio: 1], alignToLast: [.left: 0, .top: -20])
             .from(bearHead)
-            .place(rightEar, alignToLast: [.right: 0, .top: -20], w: bearEarRadius*2, aspectRatio: 1)
+            .place(rightEar, size: [.w: bearEarRadius*2, .aspectRatio: 1], alignToLast: [.right: 0, .top: -20])
             .from(bearHead)
-            .place(nose, alignToLast: [.centerX: 0, .centerY: 30], w: bearNoseRadius*2, aspectRatio: 1)
-            .goLeft(leftEye, noseEyeHorizontalDistance - bearNoseRadius, w: bearEyeRadius*2, aspectRatio: 1, alignToLast: [.centerY: -60])
-            .goRight(rightEye, noseEyeHorizontalDistance*2, alignToLast: [.centerY: 0, .width: 0, .height: 0])
+            .place(nose, size: [.w: bearNoseRadius*2, .aspectRatio: 1], alignToLast: [.centerX: 0, .centerY: 30])
+            .goLeft(leftEye, distance: noseEyeHorizontalDistance - bearNoseRadius, size: [.w: bearEyeRadius*2, .aspectRatio: 1], alignToLast: [.centerY: -60])
+            .goRight(rightEye, distance: noseEyeHorizontalDistance*2, alignToLast: [.centerY: 0, .width: 0, .height: 0])
         
             .from(bearHead)
-            .goDown(line, 20, h: 1)
-            .place(line, fromLeft: 10, fromRight: 10)
-            .goDown(label1, 5, alignToLast: [.left: 0])
-            .goRight(label2, 5, alignToLast: [.centerY: 0])
-            .goRight(label3,
-             5, alignToLast: [.centerY: 0])
-            .place(label4, fromRight: 10, alignToLast: [.centerY: 0])
+            .goDown(line, distance: 20, size: [.h: 1])
+            .place(line, from: [.left: 10, .right: 10])
+            .goDown(label1, distance: 5, alignToLast: [.left: 0])
+            .goRight(label2, distance: 5, alignToLast: [.centerY: 0])
+            .goRight(label3, distance: 5, alignToLast: [.centerY: 0])
+            .place(label4, from: [.right: 10], alignToLast: [.centerY: 0])
     }
 }
 

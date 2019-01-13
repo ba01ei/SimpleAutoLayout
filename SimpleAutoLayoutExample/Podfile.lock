@@ -1,16 +1,16 @@
 PODS:
-  - SimpleAutoLayout (0.0.2)
+  - SimpleAutoLayout (0.4.0)
 
 DEPENDENCIES:
   - SimpleAutoLayout (from `..`)
 
 EXTERNAL SOURCES:
   SimpleAutoLayout:
-    :path: ..
+    :path: ".."
 
 SPEC CHECKSUMS:
-  SimpleAutoLayout: 3b4061a5c5592598e1a7afb0aa9eb87bc4f36f35
+  SimpleAutoLayout: bfb8b06e5868872054143e789c288700d549de42
 
-PODFILE CHECKSUM: d80c2279f8d06c3fcb5711db130fc92bbf70d8fd
+PODFILE CHECKSUM: 6f4bbdceefcae72f8a779deb40aa41992e0ab1b2
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.5.3
