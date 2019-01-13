@@ -22,7 +22,7 @@ SimpleAutoLayout also supports RTL (Right to Left language) and SafeAreaLayoutGu
 If you use Cocoapod, in your Podfile, add this line:
 
 ```
-pod 'SimpleAutoLayout', :git => "git@github.com:ba01ei/SimpleAutoLayout", :tag => "0.3.0"
+pod 'SimpleAutoLayout', :git => "git@github.com:ba01ei/SimpleAutoLayout", :tag => "0.4.0"
 ```
 
 Then `import SimpleAutoLayout` and you are ready to go.
