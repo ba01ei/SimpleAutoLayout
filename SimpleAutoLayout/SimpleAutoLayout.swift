@@ -34,19 +34,10 @@ open class SimpleAutoLayout: NSObject {
     /// Added a view as the subview of this SimpleAutoLayout object's superview.
     /// Other than the subview to be added, all params are optional. Not passing in means on constraint on that field.
     /// @param item the subview to be added
-    /// @param fromLeft the distance from this superview's left border to this subview's left border
-    /// @param fromRight the distance from this superview's right border to this subview's right border
-    /// @param fromLeading the distance from this superview's leading border to this subview's leading border
-    /// @param fromTrailing the distance from this superview's trailing border to this subview's trailing border
-    /// @param fromTop the distance from this superview's top border to this subview's top border
-    /// @param fromBottom the distance from this superview's bottom border to this subview's bottom border
-    /// @param fromCenterX the distance from this superview's center X to this subview's center X
-    /// @param fromCenterY the distance from this superview's center Y to this subview's center Y
+    /// @param from the distance from each edge. Keys can be .left .right .leading .trailing .top .bottom .centerX .centerY
+    /// @param size the size of the item
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
-    /// @param w the subview's width
-    /// @param h the subview's height
-    /// @param aspectRatio the subview's width/height ratio
-    /// @param safeAreaFromTop indicates whether fromTop should be from the top edge of safe area
+    /// @param safeAreaEdges a list of edges that should include safe area margin
     @discardableResult open func place(_ item: UIView,
                                        from: [NSLayoutConstraint.Attribute: CGFloat],
                                        size: [SizingParam: CGFloat]? = nil,
@@ -116,11 +107,10 @@ open class SimpleAutoLayout: NSObject {
     /// Added a view as the subview of this SimpleAutoLayout object's superview, and place it to the right of the last subview that we added a constraint through SimpleAutoLayout.
     /// @param item the subview to be added
     /// @param distance the distance between this subview and the last subview
-    /// @param w the subview's width
-    /// @param h the subview's height
-    /// @param aspectRatio the subview's width/height ratio
+    /// @param size the size of the item
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
     /// @param endWithMargin if passed in, this subview will have this such distance to the right border of the superview
+    /// @param safeArea if endWithMargin is used, safeArea = true means the margin should also include safe area margin
     @discardableResult open func goRight(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .left, item2: lastItem, a2: .right, constant:distance)
@@ -153,11 +143,10 @@ open class SimpleAutoLayout: NSObject {
     /// Added a view as the subview of this SimpleAutoLayout object's superview, and place it to the left of the last subview that we added a constraint through SimpleAutoLayout.
     /// @param item the subview to be added
     /// @param distance the distance between this subview and the last subview
-    /// @param w the subview's width
-    /// @param h the subview's height
-    /// @param aspectRatio the subview's width/height ratio
+    /// @param size the size of the item
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
-    /// @param endWithMargin if passed in, this subview will have this such distance to the left border of the superview
+    /// @param endWithMargin if passed in, this subview will have this such distance to the right border of the superview
+    /// @param safeArea if endWithMargin is used, safeArea = true means the margin should also include safe area margin
     @discardableResult open func goLeft(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .right, item2: lastItem, a2: .left, constant:-distance)
@@ -190,11 +179,10 @@ open class SimpleAutoLayout: NSObject {
     /// Added a view as the subview of this SimpleAutoLayout object's superview, and place it below the last subview that we added a constraint through SimpleAutoLayout.
     /// @param item the subview to be added
     /// @param distance the distance between this subview and the last subview
-    /// @param w the subview's width
-    /// @param h the subview's height
-    /// @param aspectRatio the subview's width/height ratio
+    /// @param size the size of the item
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
-    /// @param endWithMargin if passed in, this subview will have this such distance to the bottom border of the superview
+    /// @param endWithMargin if passed in, this subview will have this such distance to the right border of the superview
+    /// @param safeArea if endWithMargin is used, safeArea = true means the margin should also include safe area margin
     @discardableResult open func goDown(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .top, item2: lastItem, a2: .bottom, constant: distance)
@@ -212,11 +200,10 @@ open class SimpleAutoLayout: NSObject {
     /// Added a view as the subview of this SimpleAutoLayout object's superview, and place it above the last subview that we added a constraint through SimpleAutoLayout.
     /// @param item the subview to be added
     /// @param distance the distance between this subview and the last subview
-    /// @param w the subview's width
-    /// @param h the subview's height
-    /// @param aspectRatio the subview's width/height ratio
+    /// @param size the size of the item
     /// @param alignToLast a dictionary where keys are NSLayoutAttribute, the values are the difference between this subview's value on that attribute and the last subview's. (The last subview is the subview which we set layout constraint through SimpleAutoLayout)
-    /// @param endWithMargin if passed in, this subview will have this such distance to the top border of the superview
+    /// @param endWithMargin if passed in, this subview will have this such distance to the right border of the superview
+    /// @param safeArea if endWithMargin is used, safeArea = true means the margin should also include safe area margin
     @discardableResult open func goUp(_ item: UIView, distance: CGFloat = 0, size: [SizingParam: CGFloat]? = nil, alignToLast: [NSLayoutConstraint.Attribute: CGFloat]? = nil, endWithMargin: CGFloat? = nil, safeArea: Bool = false) -> SimpleAutoLayout {
         add(item)
         addConstraint(item, a1: .bottom, item2: lastItem, a2: .top, constant: -distance)
@@ -241,9 +228,7 @@ open class SimpleAutoLayout: NSObject {
     // MARK: - Setting attributes on individual items
     
     /// Set some attributes for a subview.
-    /// @param w the subview's width
-    /// @param h the subview's height
-    /// @param aspectRatio the subview's width/height ratio
+    /// @param size the size of the item
     @discardableResult open func setAttributes(_ item: UIView, size: [SizingParam: CGFloat]?) -> SimpleAutoLayout {
         if let w = size?[.w] {
             width(item, w)
