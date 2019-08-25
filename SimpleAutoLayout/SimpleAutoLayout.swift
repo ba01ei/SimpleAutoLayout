@@ -317,7 +317,7 @@ open class SimpleAutoLayout: NSObject {
                 && constraint.secondAttribute == oldConstraint.secondAttribute
             {
                 superview.removeConstraint(oldConstraint)
-                if let index = SimpleAutoLayout.sharedConstraintDict[superview]?.index(of: oldConstraint) {
+                if let index = SimpleAutoLayout.sharedConstraintDict[superview]?.firstIndex(of: oldConstraint) {
                     SimpleAutoLayout.sharedConstraintDict[superview]?.remove(at: index)
                 }
                 
@@ -365,7 +365,7 @@ open class SimpleAutoLayout: NSObject {
                 && a2 == oldConstraint.secondAttribute
             {
                 superview.removeConstraint(oldConstraint)
-                if let index = SimpleAutoLayout.sharedConstraintDict[superview]?.index(of: oldConstraint) {
+                if let index = SimpleAutoLayout.sharedConstraintDict[superview]?.firstIndex(of: oldConstraint) {
                     SimpleAutoLayout.sharedConstraintDict[superview]?.remove(at: index)
                 }
                 break
